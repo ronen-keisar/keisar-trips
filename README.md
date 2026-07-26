@@ -2,12 +2,14 @@
 
 A single-page Hebrew (RTL) dashboard of the Keisar family's travel history —
 timeline, flight costs, total costs, and per-person shared-travel days — from
-2010 to today. Hosted at a private URL for the family only.
+2010 to today.
 
-> **This repository holds private household spending figures (in shekels).**
-> It must stay **private** and must **never** be moved to, forked into, or
-> mirrored on a public repository. Do not publish the numbers anywhere public
-> without Ronen's explicit say-so.
+**Live at https://ronen-keisar.github.io/keisar-trips/** (GitHub Pages).
+
+The repository is **public**. Ronen reviewed the contents (household spending in
+shekels, the children's names and ages, friends' names) and decided none of it
+is confidential, so it is served openly with no login gate. (An earlier plan
+used a private repo behind Cloudflare Access; that was dropped.)
 
 ## What it is
 
@@ -44,18 +46,11 @@ in the `DATA` and `DERIVED VALUES` sections.
 - `paxPaid` on a flight is the count of fare-paying tickets when a child flew as
   a free lap infant; the per-passenger figure divides by it.
 
-## Hosting and access
+## Hosting
 
-The site is served by **Cloudflare Pages** (auto-deploys from this repo's `main`
-branch) and gated by **Cloudflare Access**, which shows a login wall to everyone
-except a small allow-list of family email addresses. Visitors get a one-time PIN
-by email; no account or password is needed.
-
-**To add or remove a family member:** Cloudflare dashboard → Zero Trust →
-Access → Applications → *Keisar Trips* → the *Family* policy → edit the Emails
-list. No redeploy is needed. (Remember there is a second Access application, or
-disabled previews, covering the `*.pages.dev` preview URLs — keep those gated
-too.)
+Served by **GitHub Pages** from this repo's `main` branch (root). It rebuilds
+automatically about a minute after every push. There is no auth gate — the page
+is public at the URL above.
 
 ## Updating
 
@@ -66,7 +61,7 @@ git add -A && git commit -m "Describe the change"
 git push
 ```
 
-Cloudflare rebuilds automatically within about a minute. Nothing else to run.
+GitHub Pages rebuilds automatically within about a minute. Nothing else to run.
 
 The next substantive update is due mid-August 2026, when the Romania trip
 (31 Jul – 15 Aug) finishes and its actual costs land. It currently renders as a
