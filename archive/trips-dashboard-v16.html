@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>טיולי משפחת קיסר · דשבורד</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#007A3D; --green-deep:#005C2E; --red:#CE2B37; --sand:#E8B84B;
+  --cream:#FBF9F4; --paper:#FFFFFF; --ink:#1C1C1C;
+  --line:#E6E1D6; --muted:#7A7368; --mist:#DCD6C8;
+  --fh:'Work Sans',Arial,Helvetica,sans-serif;
+  --fb:'Inter',Arial,Helvetica,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--fb);font-size:15px;line-height:1.6}
+.wrap{max-width:1120px;margin:0 auto;padding:36px 24px 64px}
+
+header{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;padding-bottom:18px;margin-bottom:26px;flex-wrap:wrap;position:relative}
+header::after{content:"";position:absolute;bottom:0;right:0;left:0;height:4px;border-radius:2px;
+  background:linear-gradient(to left, var(--green) 0 33.33%, #FFFFFF 33.33% 66.66%, var(--red) 66.66% 100%);
+  box-shadow:0 0 0 1px var(--line)}
+h1{font-family:var(--fh);font-weight:700;color:var(--green-deep);font-size:32px;margin:0}
+.sub{color:var(--muted);font-size:14px;margin:4px 0 0}
+.stamp{font-size:12px;color:var(--muted);text-align:left}
+
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:30px}
+.kpi{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px 18px;position:relative;overflow:hidden}
+.kpi::after{content:"";position:absolute;inset-inline-start:0;top:0;bottom:0;width:4px;background:var(--green)}
+.kpi.red::after{background:var(--red)}
+.kpi.sand::after{background:var(--sand)}
+.kpi .v{font-family:var(--fh);font-weight:700;font-size:26px;color:var(--green-deep)}
+.kpi .l{font-size:12.5px;color:var(--muted)}
+.kpi .d{font-size:11.5px;color:#4A453D;margin-top:2px}
+
+h2{font-family:var(--fh);font-weight:600;color:var(--green-deep);font-size:21px;margin:0}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:26px;margin-bottom:30px}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:6px;flex-wrap:wrap}
+.note{color:var(--muted);font-size:13px;margin:0 0 18px}
+
+.era{font-family:var(--fh);font-weight:600;font-size:12px;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;margin:18px 0 4px;padding-inline-start:2px}
+.tl{position:relative;margin-top:6px}
+.tl::before{content:"";position:absolute;top:8px;bottom:8px;right:74px;width:2px;background:var(--mist)}
+.trip{display:grid;grid-template-columns:150px 1fr;gap:0;position:relative;padding:9px 0}
+.yrcell{display:flex;align-items:flex-start;gap:12px}
+.yr{position:relative;z-index:1;min-width:60px;height:32px;border-radius:16px;background:var(--green);color:#fff;font-family:var(--fh);font-weight:600;font-size:13.5px;display:flex;align-items:center;justify-content:center;margin-top:3px}
+.yr.future{background:var(--paper);color:var(--green);border:2px solid var(--green)}
+.yr.solo{background:var(--sand);color:var(--ink)}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--red);margin-top:14px;position:relative;z-index:1;flex:none}
+.dot.pre{background:var(--paper);border:2px solid var(--red);width:12px;height:12px;margin-top:13px}
+.dot.solo{background:var(--sand)}
+.dest .name{font-weight:600;font-size:15.5px}
+.dest .meta{color:var(--muted);font-size:13px}
+.flags{font-size:18px;letter-spacing:2px;margin-inline-end:6px}
+.pill{display:inline-block;background:#F2EEE4;border-radius:11px;padding:1px 9px;font-size:11.5px;color:#4A453D;margin-inline-start:6px;vertical-align:1px}
+.pill.todo{background:var(--red);color:#fff;font-weight:500}
+.yr.todo{background:var(--paper);color:var(--red);border:2px dashed var(--red)}
+.dot.todo{background:var(--paper);border:2px solid var(--red)}
+.personal{background:#FFFFFF;border-color:#C6D4E8}
+.personal h2{color:#00337A}
+.personal .yr{background:#005EB8}
+.personal .dot{background:#005EB8}
+.personal .tl::before{background:#C6D4E8}
+.personal .milestone{color:#00337A}
+.personal .pill{background:#E8F0FA;color:#00337A}
+.personal::before{content:"";display:block;height:4px;border-radius:2px;margin:-8px 0 18px;
+  background:linear-gradient(to left,#005EB8 0 46%,#FFFFFF 46% 54%,#005EB8 54% 100%);box-shadow:0 0 0 1px #C6D4E8}
+
+.biz{background:#FFFFFF;border-color:#C9D2E0}
+.biz h2{color:#0A3161}
+.biz .yr{background:#0A3161;color:#fff;border:0}
+.biz .dot{background:#B31942}
+.biz .tl::before{background:#C9D2E0}
+.biz .pill{background:#0A3161;color:#fff}
+.biz .bosbox{display:flex;flex-wrap:wrap;gap:26px;background:#F4F7FC;border:1px solid #C9D2E0;border-radius:10px;padding:14px 20px;margin:0 0 20px}
+.biz .bosbox>div{display:flex;align-items:baseline;gap:8px}
+.biz .bv{font-family:var(--fh);font-weight:700;font-size:24px;color:#0A3161}
+.biz .bl{font-size:12.5px;color:#5A6474}
+.biz::before{content:"";display:block;height:4px;border-radius:2px;margin:-8px 0 18px;
+  background:repeating-linear-gradient(to left,#B31942 0 14px,#FFFFFF 14px 28px);box-shadow:0 0 0 1px #C9D2E0}
+
+.people{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:0 0 30px}
+.person{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;text-align:center}
+.person .v{font-family:var(--fh);font-weight:700;font-size:24px;color:var(--green-deep)}
+.person .n{font-size:13px;color:var(--ink);font-weight:600}
+.person .l{font-size:11.5px;color:var(--muted)}
+.milestone{display:block;font-size:12.5px;color:var(--red);margin-top:1px}
+.milestone::before{content:"✦ ";font-size:10px;vertical-align:1px}
+.cost{font-variant-numeric:tabular-nums;font-size:12.5px;color:#4A453D}
+
+.countries{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;padding-top:18px;border-top:1px solid var(--line)}
+.c{background:#F4F1E9;border-radius:7px;padding:5px 11px;font-size:13px}
+.c b{font-weight:600;color:var(--green-deep)}
+
+.toggle{display:flex;gap:0;border:1.5px solid var(--green);border-radius:8px;overflow:hidden}
+.toggle button{appearance:none;border:0;background:var(--paper);color:var(--green);font-family:var(--fh);font-weight:600;font-size:13px;padding:7px 16px;cursor:pointer}
+.toggle button.on{background:var(--green);color:#fff}
+.legend{display:flex;flex-wrap:wrap;gap:16px;margin:14px 0 4px;font-size:13px}
+.legend span{display:flex;align-items:center;gap:7px}
+.sw{width:13px;height:13px;border-radius:3px;display:inline-block}
+.chartWrap{position:relative}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:#fff;border-radius:8px;padding:10px 14px;font-size:12.5px;line-height:1.7;opacity:0;transition:opacity .12s;white-space:nowrap;z-index:5}
+svg{width:100%;height:auto;display:block}
+.bar-seg{cursor:pointer}
+.bar-seg:hover{opacity:.85}
+
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:22px}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--line)}
+th{font-family:var(--fh);font-weight:600;color:var(--green-deep);font-size:13px;border-bottom:2px solid var(--mist)}
+td.num{font-variant-numeric:tabular-nums}
+.footnote{font-size:12.5px;color:var(--muted);margin-top:16px;padding-top:13px;border-top:1px solid var(--line)}
+@media (max-width:640px){ .trip{grid-template-columns:118px 1fr} .tl::before{right:66px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div>
+    <h1>טיולי משפחת קיסר</h1>
+    <p class="sub">17 טיולים משפחתיים · 7 אישיים · 12 נסיעות עבודה · 2010 עד 2026</p>
+  </div>
+  <div class="stamp">מקור: Memex + גיליון מעקב הוצאות · יולי 2026</div>
+</header>
+
+<div class="kpis">
+  <div class="kpi"><div class="v">17</div><div class="l">טיולים משפחתיים</div><div class="d">3 כזוג, 14 עם הילדים</div></div>
+  <div class="kpi"><div class="v">16</div><div class="l">מדינות</div><div class="d">פולין מובילה: 3 ביקורים</div></div>
+  <div class="kpi"><div class="v">29</div><div class="l">ימים · הטיול הארוך</div><div class="d">פולין 2023</div></div>
+  <div class="kpi red"><div class="v">₪68.6K</div><div class="l">הטיול היקר ביותר</div><div class="d">פולין-טאיוואן-קוריאה 2025</div></div>
+</div>
+
+<div class="people">
+  <div class="person"><div class="v">194</div><div class="n">דנה ורונן</div><div class="l">ימי טיול משותפים</div></div>
+  <div class="person"><div class="v">166</div><div class="n">גפן</div><div class="l">ימי טיול משותפים</div></div>
+  <div class="person"><div class="v">149</div><div class="n">אלמוג</div><div class="l">ימי טיול משותפים</div></div>
+  <div class="person"><div class="v">119</div><div class="n">אגם</div><div class="l">ימי טיול משותפים</div></div>
+</div>
+
+<section class="card">
+  <div class="card-head"><h2>ציר הזמן והיעדים</h2></div>
+  <p class="note">טיולים משפחתיים, מהתקופה כזוג ועד היום, ובנוסף טיולים עם חלק מהמשפחה. טיולים אישיים ועסקיים אינם מוצגים.</p>
+
+  <div class="era">כזוג</div>
+  <div class="tl" id="tlPre"></div>
+
+  <div class="era">כל המשפחה</div>
+  <div class="tl" id="tl"></div>
+
+  <div class="era">עם חלק מהמשפחה</div>
+  <div class="tl" id="tlSolo"></div>
+
+  <div class="countries">
+    <span class="c">🇵🇱 פולין <b>×3</b></span><span class="c">🇩🇪 גרמניה <b>×3</b></span>
+    <span class="c">🇮🇹 איטליה <b>×3</b></span><span class="c">🇬🇷 יוון <b>×2</b></span>
+    <span class="c">🇨🇭 שוויץ <b>×2</b></span><span class="c">🇵🇹 פורטוגל <b>×2</b></span>
+    <span class="c">🇰🇷 דרום קוריאה <b>×2</b></span><span class="c">🇪🇸 ספרד <b>×2</b></span>
+    <span class="c">🇦🇹 אוסטריה</span><span class="c">🇫🇷 צרפת</span>
+    <span class="c">🇨🇿 צ'כיה</span><span class="c">🇭🇷 קרואטיה</span><span class="c">🇸🇮 סלובניה</span>
+    <span class="c">🇹🇼 טאיוואן</span><span class="c">🇷🇴 רומניה</span><span class="c">🇭🇺 הונגריה</span>
+  </div>
+</section>
+
+<section class="card">
+  <div class="card-head">
+    <h2>עלות הטיסות</h2>
+    <div class="toggle">
+      <button id="fTotal" class="on">סה"כ לטיול</button>
+      <button id="fPer">לנוסע</button>
+    </div>
+  </div>
+  <p class="note" id="fNote">עלות הטיסות לכל טיול, בשקלים. אחד עשר טיולים שעבורם קיים תיעוד עלות.</p>
+  <div class="chartWrap" id="fWrap">
+    <svg id="fChart" viewBox="0 0 900 400" role="img" aria-label="גרף עלויות טיסות"></svg>
+    <div class="tip" id="fTip"></div>
+  </div>
+  <p class="footnote">
+    סכומים שתועדו בדולר הומרו לשקל לפי שער ממוצע של אותה שנה: אוסטריה 2013, ברצלונה 2014 ופורטוגל 2019. שאר הסכומים רשומים בשקלים.<br>
+    רודוס 2011 הוא היחיד שנרכש כחבילה, ולכן הסכום כולל גם את הלינה בחצי פנסיון ואינו בר השוואה ישירה לשאר.<br>
+    ללא נתוני עלות: איטליה 2010, ברלין 2011, ליסבון 2012, רודוס 2013, שוויץ 2015 (יש עלות לכרטיס בודד בלבד) וציריך 2025.
+  </p>
+</section>
+
+<section class="card">
+  <div class="card-head">
+    <h2>העלות הכוללת לאורך השנים</h2>
+    <div class="toggle">
+      <button id="btnTotal" class="on">סה"כ לטיול</button>
+      <button id="btnDaily">עלות ליום</button>
+    </div>
+  </div>
+  <p class="note" id="chartNote">חמישה טיולים עם רישום הוצאות מלא, בשקלים. כל עמודה: טיסות, לינה, רכב, ושאר ההוצאות בשטח.</p>
+  <div class="legend" id="legend">
+    <span><i class="sw" style="background:#007A3D"></i>טיסות</span>
+    <span><i class="sw" style="background:#CE2B37"></i>לינה</span>
+    <span><i class="sw" style="background:#E8B84B"></i>רכב שכור</span>
+    <span><i class="sw" style="background:#DCD6C8"></i>שאר ההוצאות</span>
+  </div>
+  <div class="chartWrap" id="chartWrap">
+    <svg id="chart" viewBox="0 0 900 430" role="img" aria-label="גרף עלויות הטיולים"></svg>
+    <div class="tip" id="tip"></div>
+  </div>
+
+  <table>
+    <thead><tr><th>שנה ויעד</th><th>ימים</th><th>טיסות</th><th>לינה</th><th>רכב</th><th>סה"כ</th><th>ליום</th></tr></thead>
+    <tbody>
+      <tr><td>2018 · פולין, צ'כיה, גרמניה</td><td class="num">15</td><td class="num">3,360</td><td class="num">4,197</td><td class="num">1,841</td><td class="num">18,013</td><td class="num">1,638</td></tr>
+      <tr><td>2022 · איטליה</td><td class="num">12</td><td class="num">4,034</td><td class="num">9,093</td><td class="num">5,298</td><td class="num">29,812</td><td class="num">2,710</td></tr>
+      <tr><td>2023 · פולין</td><td class="num">29</td><td class="num">6,962</td><td class="num">15,455</td><td class="num">2,874</td><td class="num">51,235</td><td class="num">1,767</td></tr>
+      <tr><td>2024 · צרפת, איטליה, קרואטיה, סלובניה</td><td class="num">18</td><td class="num">12,001</td><td class="num">15,081</td><td class="num">8,313</td><td class="num">65,117</td><td class="num">3,830</td></tr>
+      <tr><td>2025 · פולין, טאיוואן, קוריאה</td><td class="num">21</td><td class="num">16,068</td><td class="num">22,779</td><td class="num">—</td><td class="num">68,585</td><td class="num">4,034</td></tr>
+    </tbody>
+  </table>
+
+  <p class="footnote">
+    רק חמישה טיולים כוללים גם את ההוצאה בשטח (אוכל, אטרקציות, תחבורה מקומית). לשאר יש רכיבים חלקיים בלבד, והצגתם לצידם הייתה יוצרת השוואה מטעה.
+  </p>
+</section>
+
+<section class="card personal">
+  <div class="card-head"><h2>הטיולים האישיים של רונן</h2></div>
+  <p class="note">טיולים עם חברים או לבד, בנפרד מהמסלול המשפחתי.</p>
+  <div class="tl" id="tlPersonal"></div>
+</section>
+
+<section class="card biz">
+  <div class="card-head"><h2>נסיעות עבודה</h2></div>
+  <p class="note">נשמרות לצורך ייחוס בלבד, ואינן נספרות כטיולים.</p>
+  <div class="bosbox">
+    <div><span class="bv">9</span><span class="bl">נסיעות לבוסטון</span></div>
+    <div><span class="bv">72</span><span class="bl">ימים בבוסטון במצטבר</span></div>
+    <div><span class="bv">12</span><span class="bl">נסיעות עבודה בסך הכל</span></div>
+    <div><span class="bv">87</span><span class="bl">ימי נסיעות עבודה במצטבר</span></div>
+  </div>
+  <div class="tl" id="tlBiz"></div>
+</section>
+
+</div>
+
+<script>
+const pre = [
+  {y:'2010', flags:'🇮🇹', name:'איטליה, אזור אגם גארדה', meta:'27/8 עד 3/9', ms:'הטיול הראשון של רונן ודנה כזוג'},
+  {y:'2011', flags:'🇬🇷', name:'רודוס, יוון', meta:'16/6 עד 19/6', ms:'ירח דבש'},
+  {y:'2011', flags:'🇩🇪', name:'ברלין, גרמניה', meta:'18/8 עד 25/8 · עם דנה ורואי'},
+];
+const trips = [
+  {y:'2012', flags:'🇵🇹', name:'ליסבון, פורטוגל', meta:'1/6 עד 8/6 · אובידוש, סינטרה, קאבו דה רוקה, קשקאיש', ms:'דנה בהריון עם גפן'},
+  {y:'2013', flags:'🇦🇹', name:'אוסטריה', meta:'7/5 עד 14/5 · וינה, מלק, אגם אטרזה, זלצבורג', ms:'גפן תינוקת בת 6 חודשים'},
+  {y:'2013', flags:'🇬🇷', name:'רודוס, יוון', meta:'19/9 עד 24/9', ms:'עם לילך, רון ועומר'},
+  {y:'2014', flags:'🇪🇸', name:'ברצלונה וג׳ירונה, ספרד', meta:'3/7 עד 11/7', ms:'דנה בהריון עם אלמוג'},
+  {y:'2015', flags:'🇨🇭🇫🇷🇩🇪', name:'שוויץ, צרפת וגרמניה', meta:'29/4 עד 5/5 · שטרסבורג, חברים בציריך, פרנקפורט', ms:'הטיול הראשון עם גפן ואלמוג'},
+  {y:'2016', flags:'🇰🇷', name:'דרום קוריאה', meta:'3/10 עד 19/10 · סיאול, ג׳ג׳ו, בוסאן'},
+  {y:'2018', flags:'🇵🇱🇨🇿🇩🇪', name:'פולין, צ׳כיה וגרמניה', meta:'14/8 עד 28/8 · ורוצלב, פראג, דרזדן, ברלין, פוזנן', ms:'הטיול הראשון עם אגם'},
+  {y:'2019', flags:'🇵🇹', name:'פורטוגל', meta:'17/8 עד 31/8 · פורטו, סינטרה, קואימברה · עצירה בת 11 שעות בציריך בחזרה', ms:'הראשון עם שלושת הילדים'},
+  {y:'2022', flags:'🇮🇹', name:'נאפולי ואמאלפי, איטליה', meta:'20/8 עד 31/8 · עם אורלי, יאן, איב ורוי'},
+  {y:'2023', flags:'🇵🇱', name:'פולין', meta:'24/7 עד 22/8 · קרקוב, ביישצ׳אדי, ורשה', pill:'הארוך ביותר · 29 יום'},
+  {y:'2024', flags:'🇫🇷🇮🇹🇭🇷🇸🇮', name:'צרפת, איטליה, קרואטיה וסלובניה', meta:'4/8 עד 21/8 · מרסיי, ניס, טורינו, ונציה, פולה, לובליאנה · הקטע בפולה עם נדב, תמר, יואב ודפנה'},
+  {y:'2025', flags:'🇨🇭', name:'ציריך, שוויץ', meta:'24/4 עד 2/5 · אצל נדב ותמר'},
+  {y:'2025', flags:'🇵🇱🇹🇼🇰🇷', name:'פולין, טאיוואן ודרום קוריאה', meta:'23/9 עד 13/10 · ורשה, טאיפיי, סיאול', pill:'היקר ביותר'},
+  {y:'2026', flags:'🇷🇴', name:'רומניה', meta:'31/7 עד 15/8 · בוקרשט, סינאיה, פויאנה מארולוי · עם נדב, תמר, יואב, דפנה, יעל, שחר, אריאל, הלל, אלעד ושאול', pill:'מתוכנן', future:true},
+];
+const solo = [
+  {y:'2024', flags:'🇭🇺', name:'בודפשט, הונגריה', meta:'דצמבר · דנה, לילך וגפן', ms:'בת המצווה של גפן', pill:'להשלים', todo:true},
+  {y:'2025', flags:'🇪🇸', name:'מדריד וסגוביה, ספרד', meta:'29/1 עד 3/2 · רונן ואלמוג, אצל אילנה · סגוביה, יום סקי, אתלטיקו מדריד', ms:'טיול יום ההולדת ה-10 של אלמוג'},
+];
+const personal = [
+  {y:'2012', flags:'🇮🇳🇹🇭', name:'הודו ותאילנד', meta:'אפריל · נסיעת עבודה להודו עם עצירה אישית בתאילנד'},
+  {y:'2018', flags:'🏴󠁧󠁢󠁳󠁣󠁴󠁿', name:'סקוטלנד, טיול הוויסקי', meta:'11/9 עד 19/9 · עם צור ורואי · אדינבורו, איילה, ספייסייד'},
+  {y:'2022', flags:'🇩🇪', name:'ברלין, גרמניה', meta:'11/5 עד 12/5 · לילה אחד, נוסע יחיד', pill:'לא מזוהה', todo:true},
+  {y:'2022', flags:'🇮🇹', name:'פירנצה, איטליה', meta:'14/6 עד 19/6 · עם אלכס ורואי'},
+  {y:'2023', flags:'🇩🇪', name:'ברלין, גרמניה', meta:'12/5 עד 17/5 · עם אלכס, רואי וחנן'},
+  {y:'2023', flags:'🇹🇭', name:'תאילנד', meta:'ספטמבר · בנגקוק וקנצ׳נבורי · עם אילנה, אחותו של רונן'},
+  {y:'2024', flags:'🇯🇵', name:'יפן', meta:'14/3 עד 24/3 · קיוטו, אוסקה, טוקיו · עם אילנה, צור ורואי'},
+];
+const biz = [
+  {y:'2016', flags:'🇺🇸', name:'בוסטון', meta:'6/2 עד 13/2', pill:'עבודה', biz:true},
+  {y:'2016', flags:'🇺🇸', name:'בוסטון', meta:'21/5 עד 28/5', pill:'עבודה', biz:true},
+  {y:'2017', flags:'🇺🇸', name:'בוסטון', meta:'3/2 עד 10/2', pill:'עבודה', biz:true},
+  {y:'2018', flags:'🇺🇸', name:'בוסטון', meta:'13/7 עד 21/7 · כנס Impact', pill:'עבודה', biz:true},
+  {y:'2019', flags:'🇳🇱', name:'אמסטרדם', meta:'17/5 עד 23/5 · כנס Impact EMEA', pill:'עבודה', biz:true},
+  {y:'2022', flags:'🇺🇸', name:'בוסטון', meta:'~9/7 עד 16/7 · כנס Impact', pill:'עבודה', biz:true},
+  {y:'2022', flags:'🇵🇱', name:'ורשה', meta:'10/8 עד 13/8 · כנס EMEA Post Sales', pill:'עבודה', biz:true},
+  {y:'2023', flags:'🇺🇸', name:'בוסטון', meta:'21/5 עד 24/5 · כנס Impact 23', pill:'עבודה', biz:true},
+  {y:'2024', flags:'🇺🇸', name:'בוסטון', meta:'1/2 עד 8/2', pill:'עבודה', biz:true},
+  {y:'2025', flags:'🇺🇸', name:'בוסטון', meta:'2/4 עד 12/4 · כנס Impact', pill:'עבודה', biz:true},
+  {y:'2025', flags:'🇦🇪', name:'דובאי', meta:'13/5 עד 16/5 · כנס World AI Technology Expo · עם גיל דרמר', pill:'עבודה', biz:true},
+  {y:'2026', flags:'🇺🇸', name:'בוסטון', meta:'17/5 עד 24/5', pill:'עבודה', biz:true},
+];
+function row(t, kind){
+  let cls = kind==='pre' ? ' pre' : (kind==='solo' ? ' solo' : '');
+  let ycls = t.future ? ' future' : (kind==='solo' ? ' solo' : '');
+  if(kind==='biz'){ cls=''; ycls=''; }
+  if(t.todo){ cls=' todo'; ycls=' todo'; }
+  const pillCls = t.todo ? 'pill todo' : (t.biz ? 'pill biz' : 'pill');
+  return `<div class="trip">
+    <div class="yrcell"><span class="yr${ycls}">${t.y}</span><span class="dot${cls}"></span></div>
+    <div class="dest">
+      <div class="name"><span class="flags">${t.flags}</span>${t.name}${t.pill?`<span class="${pillCls}">${t.pill}</span>`:''}</div>
+      <div class="meta">${t.meta}${t.cost?` · <span class="cost">${t.cost}</span>`:''}${t.ms?`<span class="milestone">${t.ms}</span>`:''}</div>
+    </div>
+  </div>`;
+}
+document.getElementById('tlPre').innerHTML = pre.map(t=>row(t,'pre')).join('');
+document.getElementById('tl').innerHTML = trips.map(t=>row(t,'main')).join('');
+document.getElementById('tlSolo').innerHTML = solo.map(t=>row(t,'solo')).join('');
+document.getElementById('tlPersonal').innerHTML = personal.map(t=>row(t,'personal')).join('');
+document.getElementById('tlBiz').innerHTML = biz.map(t=>row(t,'biz')).join('');
+
+const fmt = n => n.toLocaleString('he-IL');
+
+/* ---------- flights chart ---------- */
+const F = [
+  {label:'2011', sub:'רודוס',        full:'רודוס, יוון', air:'אל על', total:2789, pax:2, src:'חבילה מלאה, כולל מלון'},
+  {label:'2013', sub:'אוסטריה',      full:'אוסטריה', air:'אל על', total:2150, pax:3, src:'USD 595.70'},
+  {label:'2014', sub:'ספרד',         full:'ברצלונה וג׳ירונה, ספרד', air:'SWISS', total:3427, pax:3, src:'USD 957.13'},
+  {label:'2016', sub:'קוריאה',       full:'דרום קוריאה', air:'אירופלוט', total:8475, pax:4, src:'גיליון ההוצאות'},
+  {label:'2018', sub:'פולין',        full:'פולין, צ׳כיה וגרמניה', air:'ריינאייר', total:3360, pax:5, src:'גיליון ההוצאות'},
+  {label:'2019', sub:'פורטוגל',      full:'פורטוגל', air:'SWISS', total:4846, pax:5, src:'USD 1,357.28'},
+  {label:'2022', sub:'איטליה',       full:'נאפולי ואמאלפי, איטליה', air:'', total:4034, pax:5, src:'גיליון ההוצאות'},
+  {label:'2023', sub:'פולין',        full:'פולין', air:'', total:6962, pax:5, src:'גיליון ההוצאות'},
+  {label:'2024', sub:'צרפת',         full:'צרפת, איטליה, קרואטיה וסלובניה', air:'', total:12001, pax:5, src:'גיליון ההוצאות'},
+  {label:'2025', sub:'פולין ואסיה',  full:'פולין, טאיוואן ודרום קוריאה', air:'', total:16068, pax:5, src:'גיליון ההוצאות'},
+  {label:'2026', sub:'רומניה',       full:'רומניה', air:'אל על', total:8115, pax:5, src:'אישור אל על'},
+];
+F.forEach(d=>d.per=Math.round(d.total/d.pax));
+
+const fSvg=document.getElementById('fChart'), fTip=document.getElementById('fTip'), fWrap=document.getElementById('fWrap');
+let fMode='total';
+function fRender(){
+  const W=900,H=400,padT=26,padB=60,padL=64,padR=10,plotH=H-padT-padB;
+  const n=F.length, slot=(W-padL-padR)/n, barW=Math.min(58, slot*0.6);
+  const vals=F.map(d=>fMode==='total'?d.total:d.per);
+  const maxV=Math.ceil(Math.max(...vals)/2000)*2000;
+  const y=v=>padT+plotH-(v/maxV)*plotH;
+  let s='';
+  for(let i=0;i<=5;i++){
+    const v=maxV*i/5, yy=y(v);
+    s+=`<line x1="${padL}" y1="${yy}" x2="${W-padR}" y2="${yy}" stroke="#E6E1D6"/>`;
+    s+=`<text x="${padL-8}" y="${yy+4}" text-anchor="end" font-family="Inter,Arial" font-size="11" fill="#7A7368">${v>=1000?Math.round(v/100)/10+'K':v}</text>`;
+  }
+  F.forEach((d,i)=>{
+    const cx=padL+slot*i+slot/2, x=cx-barW/2, v=fMode==='total'?d.total:d.per;
+    const y1=y(v), h=y(0)-y1;
+    const fill = fMode==='total' ? '#007A3D' : '#CE2B37';
+    s+=`<rect class="bar-seg" data-i="${i}" x="${x}" y="${y1}" width="${barW}" height="${h}" rx="5" fill="${fill}"/>`;
+    s+=`<text x="${cx}" y="${y1-7}" text-anchor="middle" font-family="Work Sans,Arial" font-size="11.5" font-weight="600" fill="#1C1C1C">${fmt(v)}</text>`;
+    s+=`<text x="${cx}" y="${H-38}" text-anchor="middle" font-family="Work Sans,Arial" font-size="12.5" font-weight="600" fill="#005C2E">${d.label}</text>`;
+    s+=`<text x="${cx}" y="${H-23}" text-anchor="middle" font-family="Inter,Arial" font-size="10.5" fill="#7A7368">${d.sub}</text>`;
+    if(d.air) s+=`<text x="${cx}" y="${H-10}" text-anchor="middle" font-family="Inter,Arial" font-size="9.5" fill="#A39B8E">${d.air}</text>`;
+  });
+  s+=`<line x1="${padL}" y1="${y(0)}" x2="${W-padR}" y2="${y(0)}" stroke="#7A7368" stroke-width="1.5"/>`;
+  fSvg.innerHTML=s;
+}
+fRender();
+fSvg.addEventListener('mousemove',e=>{
+  const t=e.target;
+  if(!t.classList||!t.classList.contains('bar-seg')){fTip.style.opacity=0;return;}
+  const d=F[+t.dataset.i];
+  fTip.innerHTML=`<b>${d.label} · ${d.full}</b>${d.air?`<br>חברת תעופה: ${d.air}`:'<br>חברת תעופה: לא מתועדת'}<br>סה"כ ₪${fmt(d.total)} · ${d.pax} נוסעים<br>₪${fmt(d.per)} לנוסע<br>מקור: ${d.src}`;
+  const r=fWrap.getBoundingClientRect();
+  fTip.style.left=(e.clientX-r.left+14)+'px';
+  fTip.style.top=(e.clientY-r.top-10)+'px';
+  fTip.style.opacity=1;
+});
+fSvg.addEventListener('mouseleave',()=>fTip.style.opacity=0);
+const fT=document.getElementById('fTotal'), fP=document.getElementById('fPer'), fN=document.getElementById('fNote');
+function setF(m){
+  if(m===fMode) return; fMode=m; fRender();
+  fT.classList.toggle('on',m==='total'); fP.classList.toggle('on',m==='per');
+  fN.textContent = m==='total'
+    ? 'עלות הטיסות לכל טיול, בשקלים. אחד עשר טיולים שעבורם קיים תיעוד עלות.'
+    : 'עלות טיסה ממוצעת לנוסע. המדד שמנטרל את גודל המשפחה, שגדלה משניים לחמישה לאורך השנים.';
+}
+fT.onclick=()=>setF('total'); fP.onclick=()=>setF('per');
+
+/* ---------- total cost chart ---------- */
+const D = [
+  {label:'2018', sub:'מרכז אירופה', days:15, flights:3360, accom:4197, car:1841, other:8615},
+  {label:'2022', sub:'איטליה',       days:12, flights:4034, accom:9093, car:5298, other:11387},
+  {label:'2023', sub:'פולין',        days:29, flights:6962, accom:15455, car:2874, other:25944},
+  {label:'2024', sub:'אירופה',       days:18, flights:12001, accom:15081, car:8313, other:29722},
+  {label:'2025', sub:'אסיה',         days:21, flights:16068, accom:22779, car:0,    other:29738},
+];
+D.forEach(d=>{ d.total=d.flights+d.accom+d.car+d.other; d.perDay=Math.round(d.total/d.days); });
+const COLORS = {flights:'#007A3D', accom:'#CE2B37', car:'#E8B84B', other:'#DCD6C8'};
+const NAMES  = {flights:'טיסות', accom:'לינה', car:'רכב שכור', other:'שאר ההוצאות'};
+const svg=document.getElementById('chart'), tip=document.getElementById('tip'), wrap=document.getElementById('chartWrap');
+let mode='total';
+const W=900,H=430,padT=26,padB=64,padL=64,padR=10,plotH=H-padT-padB;
+const n=D.length, slot=(W-padL-padR)/n, barW=Math.min(92, slot*0.62);
+function niceMax(v){ return v<=5000 ? Math.ceil(v/1000)*1000 : Math.ceil(v/10000)*10000; }
+function render(){
+  const maxV = mode==='total' ? niceMax(Math.max(...D.map(d=>d.total))) : niceMax(Math.max(...D.map(d=>d.perDay)));
+  const y = v => padT + plotH - (v/maxV)*plotH;
+  let s='';
+  for(let i=0;i<=5;i++){
+    const v=maxV*i/5, yy=y(v);
+    s+=`<line x1="${padL}" y1="${yy}" x2="${W-padR}" y2="${yy}" stroke="#E6E1D6"/>`;
+    s+=`<text x="${padL-8}" y="${yy+4}" text-anchor="end" font-family="Inter,Arial" font-size="11" fill="#7A7368">${v>=1000?(v/1000)+'K':v}</text>`;
+  }
+  D.forEach((d,i)=>{
+    const cx = padL + slot*i + slot/2, x = cx - barW/2;
+    if(mode==='total'){
+      let acc=0;
+      ['flights','accom','car','other'].forEach(k=>{
+        if(d[k]<=0) return;
+        const y1=y(acc+d[k]), h=y(acc)-y1;
+        s+=`<rect class="bar-seg" data-i="${i}" data-k="${k}" x="${x}" y="${y1}" width="${barW}" height="${h}" fill="${COLORS[k]}"/>`;
+        acc+=d[k];
+      });
+      s+=`<text x="${cx}" y="${y(d.total)-8}" text-anchor="middle" font-family="Work Sans,Arial" font-size="12.5" font-weight="600" fill="#1C1C1C">${fmt(d.total)}</text>`;
+    } else {
+      const y1=y(d.perDay), h=y(0)-y1;
+      s+=`<rect class="bar-seg" data-i="${i}" data-k="perDay" x="${x}" y="${y1}" width="${barW}" height="${h}" rx="6" fill="#007A3D"/>`;
+      s+=`<text x="${cx}" y="${y1-8}" text-anchor="middle" font-family="Work Sans,Arial" font-size="12.5" font-weight="600" fill="#1C1C1C">${fmt(d.perDay)}</text>`;
+    }
+    s+=`<text x="${cx}" y="${H-40}" text-anchor="middle" font-family="Work Sans,Arial" font-size="13" font-weight="600" fill="#005C2E">${d.label}</text>`;
+    s+=`<text x="${cx}" y="${H-22}" text-anchor="middle" font-family="Inter,Arial" font-size="11" fill="#7A7368">${d.sub}</text>`;
+  });
+  s+=`<line x1="${padL}" y1="${y(0)}" x2="${W-padR}" y2="${y(0)}" stroke="#7A7368" stroke-width="1.5"/>`;
+  svg.innerHTML=s;
+}
+render();
+svg.addEventListener('mousemove', e=>{
+  const t=e.target;
+  if(!t.classList || !t.classList.contains('bar-seg')){ tip.style.opacity=0; return; }
+  const d=D[+t.dataset.i], k=t.dataset.k;
+  tip.innerHTML = k==='perDay'
+    ? `<b>${d.label} · ${d.sub}</b><br>₪${fmt(d.perDay)} ליום<br>סה"כ ₪${fmt(d.total)} · ${d.days} ימים`
+    : `<b>${d.label} · ${d.sub}</b><br>${NAMES[k]}: ₪${fmt(d[k])}<br>סה"כ ₪${fmt(d.total)} · ${d.days} ימים · ₪${fmt(d.perDay)} ליום`;
+  const r=wrap.getBoundingClientRect();
+  tip.style.left=(e.clientX-r.left+14)+'px';
+  tip.style.top=(e.clientY-r.top-10)+'px';
+  tip.style.opacity=1;
+});
+svg.addEventListener('mouseleave', ()=>tip.style.opacity=0);
+const btnT=document.getElementById('btnTotal'), btnD=document.getElementById('btnDaily'),
+      legend=document.getElementById('legend'), noteEl=document.getElementById('chartNote');
+function setMode(m){
+  if(m===mode) return; mode=m; render();
+  btnT.classList.toggle('on', m==='total');
+  btnD.classList.toggle('on', m==='daily');
+  legend.style.display = m==='total' ? 'flex' : 'none';
+  noteEl.textContent = m==='total'
+    ? 'חמישה טיולים עם רישום הוצאות מלא, בשקלים. כל עמודה: טיסות, לינה, רכב, ושאר ההוצאות בשטח.'
+    : 'עלות ממוצעת ליום לכל טיול, בשקלים. המדד הנכון להשוואה בין טיולים באורכים שונים.';
+}
+btnT.onclick=()=>setMode('total');
+btnD.onclick=()=>setMode('daily');
+</script>
+</body>
+</html>
